@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+release_file=/etc/os-release
+
+if [[ $EUID -ne 0 ]]; then
+  echo "Root privileges required."
+  exit 1
+fi
+
+if grep -q "Ubuntu" $release_file
+then
+  apt update && apt -y upgrade
+fi
